@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="/styles/login.css" />
+    <link rel="icon" href="/images/icons/favicon.ico" />
+    <title>login & register</title>
+  </head>
+  <body>
+    <h2>환영합니다</h2>
+    <div class="container" id="container">
+      <div class="form-container sign-up-container">
+        <form id="signupForm">
+          <h1>Create Account</h1>
+          <span> Find a restaurant!</span>
+          <label for="signupUserid">
+            <input type="text" id="ID" name="ID" placeholder="ID" required />
+          </label>
+          <label for="signupPassword">
+            <input
+              type="password"
+              id="PASSWORD"
+              name="PASSWORD"
+              placeholder="Password"
+              required
+            />
+          </label>
+          <label for="signupName">
+            <input
+              type="text"
+              id="NAME"
+              name="NAME"
+              placeholder="Name"
+              required
+            />
+          </label>
+          <label for="signupEmail">
+            <input
+              type="email"
+              id="EMAIL"
+              name="EMAIL"
+              placeholder="Email"
+              required
+            />
+          </label>
+
+          <label for="signupPhone">
+            <input
+              type="number"
+              id="PHONE"
+              name="PHONE"
+              placeholder="Phone"
+              required
+          /></label>
+          <button type="button" onclick="signup(event)">Sign Up</button>
+        </form>
+      </div>
+      <div class="form-container sign-in-container">
+        <form>
+          <h1>Sign in</h1>
+          <span>or use your account</span>
+          <lable for="userID">
+            <input
+              type="text"
+              id="USERID"
+              name="USERID"
+              placeholder="ID"
+              required
+            />
+          </lable>
+          <label for="password">
+            <input
+              type="password"
+              id="USERPW"
+              name="PASSWORD"
+              placeholder="Password"
+              required
+            />
+          </label>
+          <button type="button" onclick="login()">Sign In</button>
+        </form>
+      </div>
+      <div class="overlay-container">
+        <div class="overlay">
+          <div class="overlay-panel overlay-left">
+            <h1>Welcome Back!</h1>
+            <p>로그인하려면 여기로!</p>
+            <button class="ghost" id="signIn">Sign In</button>
+          </div>
+          <div class="overlay-panel overlay-right">
+            <h1>Hello, Friend!</h1>
+            <p>회원가입은 여기로!</p>
+            <button class="ghost" id="signUp">Sign Up</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!--로그인/회원가입 화면전환 js파일-->
+    <script src="/js/login.js"></script>
+    <!--회원가입 버튼 입력 script-->
+    <script>
+      async function signup(event) {
+        //사용자입력값변수에저장
+        event.preventDefault();
+
+        const signupUserid = document.getElementById("ID").value;
+        const signupPassword = document.getElementById("PASSWORD").value;
+        const signupUsername = document.getElementById("NAME").value;
+        const signupEmail = document.getElementById("EMAIL").value;
+        const signupPhone = document.getElementById("PHONE").value;
+
+        //   // 비밀번호 확인
+        //   if (signupPassword !== checkedPassword) {
+        //     alert("비밀번호와 비밀번호 확인이 일치하지 않습니다.");
+        //     return;
+        //   }
+
+        try {
+          const response = await fetch("http://localhost:8080/api/auth/login", {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+              USERS_ID: signupUserid,
+              USERS_PW: signupPassword,
+              USERS_NAME: signupUsername,
+              USERS_EMAIL: signupEmail,
+              USERS_PHONE: signupPhone,
+              //우리꺼 추가
+            }),
+          });
+
+          if (!response.ok) {
+            const errorData = await response.json();
+            return alert(errorData.message || "회원가입에 실패했습니다.");
+          }
+
+          alert("회원가입이 완료되었습니다.");
+          window.location.href = "/login"; // 메인 페이지 URL로 변경
+        } catch (error) {
+          alert(error.message);
+        }
+      }
+    </script>
+    <script>
+      async function login() {
+        const USERS_ID = document.getElementById("USERID").value;
+        const USERS_PW = document.getElementById("USERPW").value;
+
+        try {
+          const response = await fetch(
+            "http://localhost:8080/api/auth/login/sign-in",
+            {
+              method: "POST",
+              headers: {
+                "Content-Type": "application/json",
+              },
+              body: JSON.stringify({
+                username: USERS_ID,
+                password: USERS_PW,
+              }),
+            }
+          );
+
+          if (!response.ok) {
+            const errorData = await response.json();
+            return alert(errorData.message || "로그인에 실패했습니다.");
+          }
+
+          window.location.href = "/"; // 메인 페이지 URL로 변경
+        } catch (error) {
+          alert(error.message);
+        }
+      }
+    </script>
+  </body>
+</html>

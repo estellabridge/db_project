@@ -1,0 +1,174 @@
+body {
+  font-family: "Quicksand", Arial, sans-serif;
+  margin: 0;
+  padding: 0;
+}
+
+header {
+  position: relative;
+  z-index: 1000;
+}
+
+main {
+  padding: 20px;
+  background-color: #f4f4f4;
+}
+
+.tag {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-start;
+  margin-top: 20px;
+  position: relative;
+  z-index: 2;
+}
+
+.tag a {
+  margin: 5px;
+  padding: 5px 10px;
+  background-color: #333;
+  color: white;
+  text-decoration: none;
+  border-radius: 5px;
+}
+
+#contentTitle {
+  font-size: 40px;
+  z-index: 2;
+}
+
+.tour-info .cont {
+  margin-bottom: 20px;
+}
+
+.map-wrap p {
+  margin: 5px;
+  width: fit-content;
+  padding: 5px 10px;
+  background-color: #333;
+  color: white;
+  text-decoration: none;
+  border-radius: 5px;
+}
+
+#map {
+  width: 100%;
+  height: 400px;
+  border-radius: 30px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+  margin-top: 20px;
+}
+
+.restaurant-details {
+  margin-top: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.top {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-around;
+  text-align: left;
+}
+
+.img-view {
+  width: 40%;
+  margin-bottom: 20px;
+  position: relative;
+  overflow: hidden;
+}
+
+.img-view img {
+  width: 100%;
+  height: 39.25rem;
+  transition: transform 0.3s ease-in-out;
+}
+
+.img-view::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  opacity: 0.7;
+  z-index: 1;
+}
+
+.tour-info {
+  width: 50%;
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.imgWrap2 {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  justify-content: center;
+}
+
+.imgWrap2 li {
+  flex: 0 0 30%;
+  margin-bottom: 10px;
+  margin-left: 10px;
+}
+
+.imgWrap2 img {
+  width: 100%;
+  height: auto;
+  border-radius: 5px;
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
+}
+
+.tour-info .cont {
+  margin-bottom: 20px;
+}
+
+@media (max-width: 768px) {
+  .imgWrap2 li {
+    flex: 0 0 100%;
+  }
+}
+
+.imgWrap2 {
+  border-top: 1px solid #333;
+  border-bottom: 1px solid #333;
+  padding: 10px 0;
+  margin-bottom: 20px;
+}
+
+.tour-info dl {
+  margin-bottom: 20px;
+}
+
+.tour-info .cont dt {
+  font-size: 18px;
+  border-top: 1px solid #333;
+  border-bottom: 1px solid #333;
+  padding-top: 10px;
+  padding-bottom: 10px;
+  margin-bottom: 10px;
+}
+
+.tour-info .cont dd {
+  padding-bottom: 10px;
+}
+
+.tour-btn {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.tour-btn a {
+  margin-right: 10px;
+  padding: 10px 20px;
+  background-color: #333;
+  color: white;
+  text-decoration: none;
+  border-radius: 5px;
+}

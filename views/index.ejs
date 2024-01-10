@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <%- include('include/head') %>
+    <title>Flavor Hub</title>
+  </head>
+  <body>
+    <header><%- include('include/header') %></header>
+    <%- include('include/top') %>
+    <main>
+      <section id="hero">
+        <div id="hero-content">
+          <h1>Let's explore !!</h1>
+          <form>
+            <label for="search">
+              <input
+                type="text"
+                id="searchRestaurant"
+                namd="search"
+                placeholder="가게이름을 입력해주세요"
+                onkeypress="if( event.keyCode == 13 ){getSearch(event);}"
+              />
+              <!-- 이거 설정해야대 -->
+              <a onclick="getSearch(event)">Search!!</a>
+            </label>
+          </form>
+        </div>
+      </section>
+      <section id="highlights">
+        <h2>한식</h2>
+        <ul id="destinations">
+          <% for(i=0; i< 5; i++){ %>
+          <li class="destination">
+            <a href="/list/details?uid=<%-korean.recordset[i].CON_UID%>">
+              <img
+                src="<%- korean.recordset[i].CON_IMGFILENAME %>"
+                onerror="this.onerror=null; this.src='/images/src-img/src-img.jpg';"
+              />
+            </a>
+            <p><strong><%- korean.recordset[i].CON_TITLE %></strong></p>
+          </li>
+          <% } %>
+        </ul>
+      </section>
+      <section id="highlights">
+        <h2>일식</h2>
+        <ul id="destinations">
+          <% for(i=0; i< 5; i++){ %>
+          <li class="destination">
+            <a href="/list/details?uid=<%-japanese.recordset[i].CON_UID%>">
+              <img
+                src="<%- japanese.recordset[i].CON_IMGFILENAME %>"
+                onerror="this.onerror=null; this.src='/images/src-img/src-img.jpg';"
+              />
+            </a>
+            <p><strong><%- japanese.recordset[i].CON_TITLE %></strong></p>
+          </li>
+          <% } %>
+        </ul>
+      </section>
+      <section id="highlights">
+        <h2>양식</h2>
+        <ul id="destinations">
+          <% for(i=0; i< 5; i++){ %>
+          <li class="destination">
+            <a href="/list/details?uid=<%-western.recordset[i].CON_UID%>">
+              <img
+                src="<%- western.recordset[i].CON_IMGFILENAME %>"
+                onerror="this.onerror=null; this.src='/images/src-img/src-img.jpg';"
+              />
+            </a>
+            <p><strong><%- western.recordset[i].CON_TITLE %></strong></p>
+          </li>
+          <% } %>
+        </ul>
+      </section>
+      <section id="highlights">
+        <h2>카페</h2>
+        <ul id="destinations">
+          <% for(i=0; i< 5; i++){ %>
+          <li class="destination">
+            <a href="/list/details?uid=<%-cafe.recordset[i].CON_UID%>">
+              <img
+                src="<%- cafe.recordset[i].CON_IMGFILENAME %>"
+                onerror="this.onerror=null; this.src='/images/src-img/src-img.jpg';"
+              />
+            </a>
+            <p><strong><%- cafe.recordset[i].CON_TITLE %></strong></p>
+          </li>
+          <% } %>
+        </ul>
+      </section>
+    </main>
+    <footer><%- include('include/footer') %></footer>
+    <script>
+      async function getSearch(event) {
+        event.preventDefault();
+        const search = document.getElementById("searchRestaurant").value;
+
+        try {
+          if (search.length > 0) {
+            window.location.href = "/list?page=1&search=" + search;
+          }
+        } catch (error) {
+          alert(error.message);
+        }
+      }
+    </script>
+  </body>
+</html>

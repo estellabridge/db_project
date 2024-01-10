@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <%- include('include/head') %>
+    <link rel="stylesheet" href="/styles/restaurant_Details.css" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Raleway:wght@700&family=Oleo+Script:wght@700&family=Quicksand:wght@300;500;700&display=swap"
+      rel="stylesheet"
+    />
+    <title>식당 상세정보</title>
+  </head>
+  <body>
+    <header><%- include('include/header') %></header>
+    <%- include('include/top') %>
+    <main>
+      <div class="restaurant-details">
+        <div class="top">
+          <div class="img-view">
+            <div class="img-wrap">
+              <a href="#"
+                ><img
+                  src="<%- recordset[0].CON_IMGFILENAME  %>"
+                  onerror="this.onerror=null; this.src='/images/src-img/src-img.jpg';"
+                />
+              </a>
+            </div>
+            <dd class="tag">
+              <% for( let i = 0; i < recordset.length; i++ ) { %>
+              <a href="#" onclick="selectTourSearch('태그검색'); return false;"
+                >#<%- recordset[i].CON_KEYWORDS %></a
+              >&nbsp; <% } %>
+            </dd>
+          </div>
+          <div class="tour-info">
+            <dl class="title">
+              <dt>
+                <span class="contentTitle" id="contentTitle"
+                  ><%- recordset[0].CON_TITLE %></span
+                >
+              </dt>
+            </dl>
+            <dl class="cont">
+              <dt>기본정보</dt>
+              <p><%- recordset[0].CON_CONTENT %></p>
+              <p><%- recordset[0].CON_SUMMARY %></p>
+            </dl>
+            <div class="tour-btn">
+              <a
+                href="#"
+                onclick="upLikeCNT('<%- recordset[0].CON_UID %>')"
+                class="like"
+              >
+                좋아요<%- recordset[0].CON_LIKECNT %>
+              </a>
+              <a class="scrap"
+                >조회수
+                <span id="scrapCnt_7270"
+                  ><%- recordset[0].CON_READCNT %></span
+                ></a
+              >
+              <a href="/list" class="list">목록</a>
+            </div>
+          </div>
+          <div class="map-wrap">
+            <p>위치정보</p>
+            <div id="map" style="width: 1280px; height: 720px"></div>
+          </div>
+          <script
+            type="text/javascript"
+            src="//dapi.kakao.com/v2/maps/sdk.js?appkey=4dcd73ba95b9fd0f7ccbccf0f035871f"
+          ></script>
+          <script>
+            async function upLikeCNT(uid) {
+              try {
+                const response = await fetch(
+                  `http://localhost:8080/api/auth/likeCNT?uid=${uid}`,
+                  {
+                    method: "POST",
+                  }
+                );
+                const data = await response.json();
+                if (!response.ok) {
+                  return alert(data.message || "로그인이 필요합니다!");
+                }
+                window.location.reload();
+              } catch (error) {
+                alert(error.message);
+              }
+            }
+
+            window.onload = async () => {
+              var container = document.getElementById("map");
+              var options = {
+                center: new kakao.maps.LatLng(
+                  "<%-recordset[0].CON_LATITUDE %>",
+                  "<%-recordset[0].CON_LONGITUDE %>"
+                ),
+                level: 2,
+              };
+
+              var map = new kakao.maps.Map(container, options);
+
+              var markerPosition = new kakao.maps.LatLng(
+                "<%-recordset[0].CON_LATITUDE %>",
+                "<%-recordset[0].CON_LONGITUDE %>"
+              );
+
+              // 마커를 생성합니다
+              var marker = new kakao.maps.Marker({
+                position: markerPosition,
+              });
+
+              // 마커가 지도 위에 표시되도록 설정합니다
+              marker.setMap(map);
+
+              // 아래 코드는 지도 위의 마커를 제거하는 코드입니다
+              // marker.setMap(null);
+            };
+          </script>
+        </div>
+      </div>
+    </main>
+    <footer><%- include('include/footer') %></footer>
+  </body>
+</html>
